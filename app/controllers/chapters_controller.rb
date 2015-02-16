@@ -1,7 +1,7 @@
 class ChaptersController < ApplicationController
   require 'rails_autolink'
   def index
-    @chapters = Chapter.all
+    @chapters = Chapter.order("chapter ASC").all
     states = {}
     @chapters.each do |l|
       if states[l.state]
@@ -29,6 +29,7 @@ end
     @bios = @chapter.bios
     @leaders = @bios.where(title: "LEADERS")
     @instructors = @bios.where(title: "INSTRUCTORS")
+    @volunteers = @bios.where(title: "VOLUNTEERS")
 
     api = MeetupApi.new
     @events = api.events(group_id: @chapter.meetup_id)
