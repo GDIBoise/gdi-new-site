@@ -13,20 +13,24 @@
       <p class="subtitle">- don't be shy -</p>
       <%= link_to "{ Join Us }", "http://www.meetup.com/#{@chapter.meetup}", :class=>"button" %>
 
-      <!-- <% if @chapter.sponsors.count != 0 %>
+      <% if @chapter.sponsors.count != 0 %>
         <div class="hide">
           <div class="sponsors">
             <h2>Sponsors</h2>
-            <div id="logos">
+            <div class="logos">
               <% @sponsors.each do |sponsor| %>
                 <% if sponsor.image? %>
-                  <p><%#= link_to image_tag(sponsor.image.url), sponsor.url %></p>
+                  <%= link_to image_tag(sponsor.image.url), sponsor.url, target: "_blank" %>
+                <% elsif sponsor.name? %>
+                  <%= link_to sponsor.url, target: "_blank", :class=>"subtitle" do %>
+                    { <%= sponsor.name %> }
+                  <% end %>
                 <% end %>
               <% end %>
             </div>
           </div>
         </div>
-      <% end %> -->
+      <% end %>
     </aside>
 
     <section id="content-section">
@@ -144,7 +148,7 @@
       <%% _.each( classesArr,function(course){ %>
         <h3><a href="<%%= course.event_url %>"><%%= course.name %></a></h3>
         <p class="subtitle">[ <%%= moment(course.time).format("dddd, MMMM Do YYYY, h:mm a") %>
-        <%% if(typeof course.venue !== "undefined") { %>
+        <%% if(typeof course.venue !== "undefined" && course.visibility === "public") { %>
             , <a href=" https://maps.google.com/?q=<%%= course.venue.address_1 %>, <%%= course.venue.city %>, <%%= course.venue.state %>"><%%= course.venue.address_1 %>,<%%= course.venue.city %>,<%%= course.venue.state %></a>
           <%% } %>
           ] </p>
